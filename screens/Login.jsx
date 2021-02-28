@@ -1,8 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-import React from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import { SocialIcon } from 'react-native-elements'
-import {Button,TextInput,Image, ImageBackground, StyleSheet, Text, View,  } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Button,TextInput,Image, ImageBackground, StyleSheet, Text, View, ToastAndroid, Alert } from 'react-native';
+import authActions from '../redux/actions/authActions'
+import {connect} from 'react-redux'
 import { ScrollView } from 'react-native-gesture-handler';
 
 
@@ -12,6 +14,48 @@ const logo = {uri: "https://i.imgur.com/ODollJl.png"}
 
 
 const Login =(props) => {
+
+  const [login, setLogin] = useState([])
+    const [newValue, setNewValue] = useState({})
+    const[errores, setErrores] = useState([])
+
+    const inputLogin = (name, value) => {
+      setNewValue({
+            ...newValue,
+            [name]: value
+        })
+    }
+
+    const enviarInfo = async e => {
+      e.preventDefault()
+      
+     
+      if(newValue.username === '' || newValue.password === '') {
+          Alert.alert('completar')
+
+          return false
+      }
+     
+      setErrores([])
+      const respuesta = await props.loginClient(newValue)
+      
+      if(respuesta && !respuesta.successs){
+         setErrores([respuesta.mensaje])
+
+        errores.map(error => Alert.alert(error))
+         
+         
+      } else {
+        
+        Alert.alert('Hi '+`${newValue.username}! ` + 'welcome to MyTinerary! 🌎🌞')
+
+
+        
+        props.navigation.navigate("Home")
+
+        
+      }
+  }
 
   return(
     <View style={styles.cajaGrande}>
@@ -31,11 +75,14 @@ const Login =(props) => {
                 <TextInput
                   style={[styles.input, styles.textArea]}
                   placeholder="Username"
+                  onChangeText={(value) => inputLogin("username", value)}
                   
               />
               <TextInput
+                  secureTextEntry
                   style={[styles.input, styles.textArea]}
                   placeholder='Password'
+                  onChangeText={(value) => inputLogin("password", value)}
                   
                   
               />
@@ -44,7 +91,9 @@ const Login =(props) => {
                     style={styles.pruebita}
                     title="LOGIN"
                     color="#841584"
-                    
+                    onPress=
+                      {enviarInfo}
+                  
                   />
                 </View>
                
@@ -168,4 +217,34 @@ const styles = {
   
 }
 
-export default Login
+const mapStateToProps = state => {
+  return {
+      loggedUser: state.auth.loggedUser
+  }
+} // INFORMACION
+
+const mapDispatchToProps = { 
+  loginClient: authActions.loginClient
+  
+} // FUNCIONES
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
+
+
+
+// async () => {
+//   try {
+//       await AsyncStorage.setItem("newValue", JSON.stringify(newValue))
+//       var userLog = await AsyncStorage.getItem("newValue")
+//       props.navigation.navigate("Home")
+//       setLogin(userLog)
+//   }
+//   catch (error) {
+//       console.log(error)
+//   }
+//   ToastAndroid.showWithGravity(
+//     "Welcome to MyTinerary! 🥳🌎",
+//     ToastAndroid.SHORT,
+//     ToastAndroid.CENTER
+//   );}

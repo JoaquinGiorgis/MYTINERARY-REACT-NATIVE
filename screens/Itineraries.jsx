@@ -25,8 +25,6 @@ useEffect(()=> {
 },[])
 
 
-
-
     return(
         <View style={styles.cajaPadreCities}>
         <ImageBackground style={styles.fondoCiudades} source={fondo}>
@@ -57,7 +55,7 @@ useEffect(()=> {
                     </View>
                 </View>
 
-                {(itineraries.length === 0) ? <Image source={oops} style={styles.imagenOops}/> : itineraries.map(itinerary => (
+                {(itineraries.length === 0) ?<View><Image source={oops} style={styles.imagenOops}/><Text>Go back all cities</Text></View> : itineraries.map(itinerary => (
                             
                             <View  style={styles.cajaMap}>           
                             

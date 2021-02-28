@@ -1,6 +1,7 @@
 import React, {useRef, useState, useEffect} from 'react';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button,View,Text,Image,ImageBackground,Dimensions,StyleSheet,TouchableOpacity,Platform} from 'react-native';
 
 const mountainMan = {uri: "https://i.imgur.com/XPqVsKg.png"}
@@ -48,6 +49,16 @@ const Home =({navigation}) => {
     setEntries(ENTRIES1);
   }, []);
 
+  useEffect(()=>{
+    persistencia()
+  })
+
+  const persistencia = async () =>{
+    var userLog = await AsyncStorage.getItem("newValor")
+   console.log(JSON.parse(userLog))
+
+  }
+
 
   const renderItem = ({item, index}, parallaxProps) => {
     return (
@@ -67,11 +78,14 @@ const Home =({navigation}) => {
       
 
         <View  style={styles.cajaGrande}>
+
             <ImageBackground source={night} style={styles.image}>
                 
                 <Image source={mountainMan} style={styles.stretch} />
                 
-                
+                <View><Text>
+                  {}
+                  </Text></View>
                     
                 <View style={styles.containerCarrousel}>
                   <TouchableOpacity onPress={goForward}>
@@ -139,7 +153,7 @@ xd:{
         alignItems:'center',
         justifyContent:'center',
         height:50,
-        marginBottom:50,
+        marginBottom:30,
         width:'40%',
         borderRadius:25,
         borderWidth: 1,

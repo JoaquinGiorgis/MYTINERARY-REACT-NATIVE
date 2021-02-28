@@ -1,8 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-import React from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import { SocialIcon } from 'react-native-elements'
-import {Button,TextInput,Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import axios from 'axios'
+import SelectPicker from 'react-native-form-select-picker';
+import {Button,TextInput,Image, ImageBackground, StyleSheet, Text, View, Alert } from 'react-native';
+import authActions from '../redux/actions/authActions'
+import {connect} from 'react-redux'
+import { ScrollView } from "react-native-gesture-handler";
 
 
 
@@ -10,16 +14,74 @@ const image = { uri: "https://cdn.dribbble.com/users/3562886/screenshots/1462836
 const logo = {uri: "https://i.imgur.com/ODollJl.png"}
 
 
-const Login =() => {
+const Register =(props) => {
+
+  const [countries, setCountries] = useState([]);
+
+  const [login, setLogin] = useState([])
+  const [newValue, setNewValue] = useState({})
+  const[errores, setErrores] = useState([])
+
+  const inputLogin = (name, value) => {
+    setNewValue({
+          ...newValue,
+          [name]: value
+      })
+  }
+
+  const enviarInfo = async e => {
+    e.preventDefault()
+    
+   
+    if(newValue.username === '' || newValue.password === '') {
+        Alert.alert('completar')
+
+        return false
+    }
+   
+    setErrores([])
+    const respuesta = await props.newClient(newValue)
+    
+    if(respuesta && !respuesta.successs){
+       setErrores(respuesta.errores)
+
+      errores.map(error => Alert.alert(error))
+       
+       
+    } else {
+      
+      Alert.alert('Hi '+`${newValue.username}! ` + 'welcome to MyTinerary! 🌎🌞')
+
+
+      
+      props.navigation.navigate("Home")
+
+      
+    }
+}
+
+
+
+  const fetchCountries = async () => {
+    const api = await fetch ('https://restcountries.eu/rest/v2/all');
+    const responseCountries = await api.json();
+    setCountries(responseCountries)
+  }
+
+  useEffect(() => {
+    fetchCountries();
+  },[])
+ 
 
   return(
 
     <View style={styles.cajaGrande}>
+      <ScrollView>
        <ImageBackground source={image} style={styles.image}>
         
           <Image source={logo} style={styles.stretch} />
         
-        
+      
         <View style={styles.prueba}>
           <View style={styles.cajaRegister}>
             <Text style={styles.texto}>REGISTER</Text>
@@ -27,36 +89,68 @@ const Login =() => {
             <TextInput
               style={[styles.input, styles.textArea]}
               placeholder="Name"
+              placeholderTextColor="#9b9b9b"
+              onChangeText={(value) => inputLogin("name", value)}
               
           />
           <TextInput
               style={[styles.input, styles.textArea]}
               placeholder='LastName'
+              placeholderTextColor="#9b9b9b"
+            onChangeText={(value) => inputLogin("lastname", value)}
+
           />
 
           <TextInput
               style={[styles.input, styles.textArea]}
               placeholder='Username'
+              placeholderTextColor="#9b9b9b"
+            onChangeText={(value) => inputLogin("username", value)}
+
           />
+          <TextInput
+            style={[styles.input, styles.textArea]}
+            placeholder='Password'
+            placeholderTextColor="#9b9b9b"
+            onChangeText={(value) => inputLogin("password", value)}
+
+                />
+
           <TextInput
               style={[styles.input, styles.textArea]}
               placeholder='Mail'
+              placeholderTextColor="#9b9b9b"
+            onChangeText={(value) => inputLogin("mail", value)}
+
           />
           <TextInput
               style={[styles.input, styles.textArea]}
               placeholder='UserPic'
+              placeholderTextColor="#9b9b9b"
+            onChangeText={(value) => inputLogin("urlpic", value)}
+
           />
-          <TextInput
-              style={[styles.input, styles.textArea]}
-              placeholder='Country'
-          />
+          <View style={[styles.input, styles.textArea]}>
+            <SelectPicker default='Choose a country' label ='country' placeholder='Country' placeholderStyle={{color:'#9b9b9b'}}  >
+              {countries.map((country, index) =>{
+                return(
+                  <SelectPicker.Item label ={country.name} value={country.name} key={country.name} onChangeText={(value) => inputLogin("country", value)}>{country.name} </SelectPicker.Item>
+                )
+              })}
+            </SelectPicker>
+          </View>
+
             <View style={styles.boton}>
               <Button
                 style={styles.pruebita}
                 title="Register"
                 color="#841584"
+                onPress=
+                {enviarInfo}
+                
                 
               />
+              
             </View>
             
           </View>
@@ -70,8 +164,9 @@ const Login =() => {
             type='facebook'
           />
         </View>
-
+        
       </ImageBackground>
+      </ScrollView>
     </View>
   )
 }
@@ -99,7 +194,7 @@ const styles = {
   },
 
   textArea:{
-    
+     
     height: 40,
     width:"80%",
     paddingLeft:10,
@@ -165,4 +260,15 @@ const styles = {
   
 }
 
-export default Login
+const mapStateToProps = state => {
+  return {
+      loggedUser: state.auth.loggedUser
+  }
+} // INFORMACION
+
+const mapDispatchToProps = { 
+  newClient: authActions.newClient
+  
+} // FUNCIONES
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

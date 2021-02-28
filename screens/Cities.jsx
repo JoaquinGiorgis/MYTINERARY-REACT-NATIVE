@@ -39,7 +39,7 @@ return(
                 
                 onPress={() => props.navigation.navigate("Itineraries",{idCity: city._id, cityPic: city.cityPic, cityName: city.cityName})}>
                 <View style={styles.pruebaaa} >
-                                      
+                                        
                       <Image style={styles.fotoCiudad} source={{uri:`${city.cityPic}`}}/>
                       <Text style={styles.nombreCiudad}>{city.cityName}</Text>
                       

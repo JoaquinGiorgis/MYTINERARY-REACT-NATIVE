@@ -13,7 +13,9 @@ const authReducer = (state = initialState, action) => {
             }
 
         case 'DISCONNECT_USER':
-            localStorage.clear()
+            clearAsyncStorage = async() => {
+                AsyncStorage.clear();
+            }
             return {
                 ...state,
                 loggedUser: null

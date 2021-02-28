@@ -1,17 +1,17 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import Nav from './Nav'
+import {Provider} from "react-redux"
+import { applyMiddleware, createStore } from "redux";
+import thunk from "redux-thunk";
+import rootReducer from './redux/reducers/rootReducers'
 
-
-import  DrawerNavigator  from "./routes/DrawerNavigator";
-import { StackNavigator } from "./routes/StackNavigator";
+const miStore = createStore(rootReducer, applyMiddleware(thunk))
 
  const App = () => {
   return (
-    <NavigationContainer >
-      
-      <StackNavigator />
-      
-    </NavigationContainer>
+    <Provider store={miStore}>
+      <Nav/>
+    </Provider>
   );
 }
 export default App
