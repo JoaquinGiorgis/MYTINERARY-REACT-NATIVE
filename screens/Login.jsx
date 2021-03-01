@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button,TextInput,Image, ImageBackground, StyleSheet, Text, View, ToastAndroid, Alert } from 'react-native';
 import authActions from '../redux/actions/authActions'
 import {connect} from 'react-redux'
+
 import { ScrollView } from 'react-native-gesture-handler';
 
 
@@ -31,8 +32,7 @@ const Login =(props) => {
       
      
       if(newValue.username === '' || newValue.password === '') {
-          Alert.alert('completar')
-
+          Alert.alert('All fields are required!')
           return false
       }
      

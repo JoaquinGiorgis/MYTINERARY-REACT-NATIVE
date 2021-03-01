@@ -1,16 +1,27 @@
 
 import React, {useRef, useState, useEffect} from 'react';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-import {TouchableHighlight,ScrollView,Button,Text, View, Image, ImageBackground } from 'react-native';
+import {TouchableHighlight,ScrollView,Button,Text, View, Image, ImageBackground,RefreshControl } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 
 const fondoCities = { uri: 'https://image.freepik.com/vector-gratis/gradiente-liquido-fondo-pantalla-mobille_79603-461.jpg'}
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+  
 
 const Cities =(props) => {
-console.log(props)
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
     const [cities, setCities] = useState([])
 
     useEffect(()=> {
@@ -33,7 +44,12 @@ return(
 
 
         <View style={styles.cajaContenedorCities} >
-            <ScrollView >
+            <ScrollView refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }>
                 {cities.map(city => (
                 <TouchableOpacity
                 
@@ -47,6 +63,7 @@ return(
                   </View>
               </TouchableOpacity>
                 ))}
+                
             </ScrollView>   
         </View>
     </ImageBackground>

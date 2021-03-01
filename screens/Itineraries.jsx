@@ -1,4 +1,4 @@
-import {TouchableHighlight,ScrollView,Button,Text, View, Image, ImageBackground } from 'react-native';
+import {TouchableHighlight,ScrollView,Button,Text, View, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import React, {useRef, useState, useEffect} from 'react';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
@@ -90,7 +90,7 @@ useEffect(()=> {
 
                                     </View>
                                     
-                                
+                                   
                                     
                                     <View style={styles.cajaInfoUser}>
                                         <Text style={styles.info}>Hours: {itinerary.hours}</Text>
@@ -100,6 +100,13 @@ useEffect(()=> {
                                     <View style={styles.casa}>
                                         <Text style={styles.footerCard}>WE WILL WAIT FOR YOU!</Text>
                                     </View>
+
+                                    <TouchableOpacity
+                                        onPress={() => props.navigation.navigate("Comments",{itId: itinerary._id, comments: itinerary.comments})}>
+                                        <View style={styles.pruebaaa} >   
+                                            <Text style={styles.nombreCiudad}>Any questions?</Text>                         
+                                        </View>
+                                    </TouchableOpacity>
                                             <View style={styles.test}>
                                             </View>
                             </View>

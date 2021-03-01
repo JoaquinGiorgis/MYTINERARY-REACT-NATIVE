@@ -2,6 +2,8 @@ import React, {useRef, useState, useEffect} from 'react';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import authActions from '../redux/actions/authActions'
+import {connect} from 'react-redux'
 import {Button,View,Text,Image,ImageBackground,Dimensions,StyleSheet,TouchableOpacity,Platform} from 'react-native';
 
 const mountainMan = {uri: "https://i.imgur.com/XPqVsKg.png"}
@@ -36,7 +38,7 @@ const {width: screenWidth} = Dimensions.get('window');
 
 
 
-const Home =({navigation}) => { 
+const Home =(props) => { 
 
   const [entries, setEntries] = useState([]);
   const carouselRef = useRef(null);
@@ -44,6 +46,11 @@ const Home =({navigation}) => {
   const goForward = () => {
     carouselRef.current.snapToNext();
   };
+  
+  const disconnectUser = async()=> {
+    await props.disconnectUser()
+    props.navigation.navigate('Login')
+  }
 
   useEffect(() => {
     setEntries(ENTRIES1);
@@ -55,12 +62,13 @@ const Home =({navigation}) => {
 
   const persistencia = async () =>{
     var userLog = await AsyncStorage.getItem("newValor")
-   console.log(JSON.parse(userLog))
+  //  console.log(JSON.parse(userLog))
 
   }
 
 
   const renderItem = ({item, index}, parallaxProps) => {
+
     return (
       <View style={styles.itemCarrousel}>
         <ParallaxImage
@@ -73,6 +81,7 @@ const Home =({navigation}) => {
       </View>
     );
   };
+
   
     return(
       
@@ -102,9 +111,13 @@ const Home =({navigation}) => {
                   />
                   
                 </View>
+
+                <View style={styles.botonCities}>
+                  <Text style={styles.xd}  onPress={()=> props.navigation.navigate('Cities')}>GO CITIES</Text>
+                </View>
                 
                 <View style={styles.botonCities}>
-                  <Text style={styles.xd}  onPress={()=> navigation.navigate('Cities')}>GO CITIES</Text>
+                  <Text style={styles.xd}  onPress={()=> disconnectUser()}>LOGOUT</Text>
                 </View>
               
 
@@ -176,4 +189,15 @@ xd:{
 
 
 
- export default Home
+ const mapStateToProps = state => {
+  return {
+      loggedUser: state.auth.loggedUser
+  }
+} // INFORMACION
+
+const mapDispatchToProps = { 
+  disconnectUser: authActions.disconnectUser
+  
+} // FUNCIONES
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

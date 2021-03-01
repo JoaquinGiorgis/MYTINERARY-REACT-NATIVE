@@ -1,9 +1,11 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { StackNavigator } from "./routes/StackNavigator";
+import {connect} from 'react-redux'
+import StackNavigator  from "./routes/StackNavigator";
 
-const Nav = () => {
+const Nav = (props) => {
+  console.log(props)
     return (
         <NavigationContainer >
           
@@ -13,4 +15,14 @@ const Nav = () => {
     );
   }
 
-  export default Nav
+  const mapStateToProps = state => {
+    return {
+        loggedUser: state.auth.loggedUser
+    }
+  } // INFORMACION
+
+  const mapDispatchToProps = {
+    
+  }
+
+export default connect(mapStateToProps, null)(Nav);

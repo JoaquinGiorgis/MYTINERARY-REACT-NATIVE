@@ -29,6 +29,7 @@ const Register =(props) => {
       })
   }
 
+
   const enviarInfo = async e => {
     e.preventDefault()
     
@@ -131,10 +132,10 @@ const Register =(props) => {
 
           />
           <View style={[styles.input, styles.textArea]}>
-            <SelectPicker default='Choose a country' label ='country' placeholder='Country' placeholderStyle={{color:'#9b9b9b'}}  >
+            <SelectPicker default='Choose a country' label ='country' placeholder='Country' placeholderStyle={{color:'#9b9b9b'}} onValueChange={(value) => inputLogin("country", value)}  >
               {countries.map((country, index) =>{
                 return(
-                  <SelectPicker.Item label ={country.name} value={country.name} key={country.name} onChangeText={(value) => inputLogin("country", value)}>{country.name} </SelectPicker.Item>
+                  <SelectPicker.Item label ={country.name} value={country.name} key={country.name} >{country.name} </SelectPicker.Item>
                 )
               })}
             </SelectPicker>
@@ -175,7 +176,7 @@ const styles = {
   social:{
     paddingLeft:25,
     paddingRight:25,
-    marginTop:"15%",
+    marginTop:"8%",
   },
 
 
@@ -228,7 +229,6 @@ const styles = {
   cajaRegister:{
     paddingBottom:10,
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
-    
     width:'75%',
     borderRadius:25,
     borderWidth: 1,

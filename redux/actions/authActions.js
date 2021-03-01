@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 
 
@@ -30,6 +31,42 @@ const authActions = {
                 return respuesta.data
             }
             dispatch({type:'LOG_USER', payload: respuesta.data})
+        }
+    },
+
+    logFromAsyncStorage: (token) => {
+        return async (dispatch, getState)=>{
+            try{
+                const respuesta = await axios.post('https://mytinerarybackend.herokuapp.com/api/user/localstorage', {token}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                if (respuesta.data.success) {
+                    console.log(respuesta)
+                }
+
+                dispatch({type: 'LOG_USER', payload:{response: {...respuesta.data.response}}})
+            } catch (error) {
+                if(error.response.status === 401) {
+                   alert.alert('Acceso denegado!')
+                      AsyncStorage.clear()
+                }
+            }
+        }
+    }, 
+    cargarComentarios: newComment => {
+        return async (dispatch, getState) => {
+            const respuesta = await axios.post('http://localhost:4000/api/itineraries/', newComment)
+            
+            
+            if(respuesta.data.success === true) {
+                const respuesta = await axios.get('http://localhost:4000/api/itineraries/'+newComment.ciudadId)
+                dispatch({type: "ID_CITY_ITINERARIES", payload: respuesta.data.respuesta})
+                
+            }
+
+            
         }
     },
 
