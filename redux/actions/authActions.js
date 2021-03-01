@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import {Alert } from 'react-native';
 import axios from 'axios'
 
 
@@ -49,8 +50,8 @@ const authActions = {
                 dispatch({type: 'LOG_USER', payload:{response: {...respuesta.data.response}}})
             } catch (error) {
                 if(error.response.status === 401) {
-                   alert.alert('Acceso denegado!')
-                      AsyncStorage.clear()
+                   Alert.alert('Acceso denegado!')
+                    //   AsyncStorage.clear()
                 }
             }
         }

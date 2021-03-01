@@ -1,4 +1,4 @@
-const { default: AsyncStorage } = require("@react-native-async-storage/async-storage")
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const initialState = {
@@ -10,8 +10,10 @@ const authReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case 'LOG_USER': // new_user action
-            AsyncStorage.setItem('name', action.payload.name)
-            AsyncStorage.setItem('token', action.payload.token)
+            
+            // AsyncStorage.setItem('username', action.payload.username)
+            // AsyncStorage.setItem('token', action.payload.token)
+            
             return {
                 ...state,
                 loggedUser: action.payload.response
@@ -19,7 +21,7 @@ const authReducer = (state = initialState, action) => {
 
         case 'DISCONNECT_USER':
             
-            AsyncStorage.clear();
+            // AsyncStorage.clear();
         
             return {
                 ...state,

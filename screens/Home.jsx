@@ -1,7 +1,6 @@
 import React, {useRef, useState, useEffect} from 'react';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import authActions from '../redux/actions/authActions'
 import {connect} from 'react-redux'
 import {Button,View,Text,Image,ImageBackground,Dimensions,StyleSheet,TouchableOpacity,Platform} from 'react-native';
@@ -56,15 +55,6 @@ const Home =(props) => {
     setEntries(ENTRIES1);
   }, []);
 
-  useEffect(()=>{
-    persistencia()
-  })
-
-  const persistencia = async () =>{
-    var userLog = await AsyncStorage.getItem("newValor")
-  //  console.log(JSON.parse(userLog))
-
-  }
 
 
   const renderItem = ({item, index}, parallaxProps) => {

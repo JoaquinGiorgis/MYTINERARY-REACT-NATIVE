@@ -19,63 +19,37 @@ const StackNavigator = (props) => {
 
 var routes = null
 
-if(!props.loggedUser){
-  routes= 
+if(props.loggedUser){
+  var routes = 
   <>
-    <Stack.Screen name="Login" component={Login} />
-    <Stack.Screen name="Register" component={Register} />
+<Stack.Screen name="Home" component={Home}/>
+      <Stack.Screen name="Cities" component={Cities} />
+      <Stack.Screen name="Itineraries" component={Itineraries} />
+      <Stack.Screen name="Comments" component={Comments} />
+  </>
+} else {
+  var routes=
+  <>
+  <Stack.Screen name="Login" component={Login} />
+  <Stack.Screen name="Register" component={Register} />
   </>
 }
 
 
+
   return (
-    <Stack.Navigator initialRouteName="Login" screenOptions={{
+    <Stack.Navigator screenOptions={{
       headerShown: false
     }}>
+     
+     {routes}
       
-      <Stack.Screen name="Home" component={Home}/>
-      <Stack.Screen name="Cities" component={Cities} />
-      <Stack.Screen name="Itineraries" component={Itineraries} />
-      <Stack.Screen name="Comments" component={Comments} />
-      {routes}
+      
     </Stack.Navigator>
   );
 }
 
 
-// const HomeStackNavigator = () => {
-//     return (
-//       <Stack.Navigator screenOptions={{
-//         headerShown: false
-//       }}> 
-//         <Stack.Screen name="Home" component={Home} />
-        
-//       </Stack.Navigator>
-//     );
-//   }
-
-
-//   const CitiesStackNavigator = () => {
-//     return (
-//       <Stack.Navigator screenOptions={{
-//         headerShown: false
-//       }}> 
-//         <Stack.Screen name="Cities" component={Cities} />
-        
-//       </Stack.Navigator>
-//     );
-//   }
-
-//   const ItinerariesStackNavigator = () => {
-//     return (
-//       <Stack.Navigator screenOptions={{
-//         headerShown: false
-//       }}> 
-//         <Stack.Screen name="Itineraries" component={Itineraries} />
-        
-//       </Stack.Navigator>
-//     );
-//   }
 const mapStateToProps = state => {
   return {
       loggedUser: state.auth.loggedUser

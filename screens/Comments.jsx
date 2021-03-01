@@ -3,16 +3,18 @@ import {TouchableHighlight,ScrollView,Button,Text, View, Image, ImageBackground,
 
 const Comments = (props) => {
     console.log(props)
+    const logoFoto = {uri:'https://cdn.dribbble.com/users/1146228/screenshots/3689910/1800x600.jpg?compress=1&resize=800x600'}
     return (
         <ScrollView>
+
         <View style={styles.contenedor}>
-            
+            <ImageBackground source={logoFoto} style={styles.fondo}>
                 <View style={styles.cajaComentarios}>
             
                     {props.route.params.comments.map(Comment => (
                     <View style={styles.cajaPadreComentarios}>
                         <View style={styles.nombreUser}>
-                            <Text>{Comment.userName}</Text>
+                            <Text style={styles.username}>{Comment.userName}</Text>
                         </View>
                         <View style={styles.cajaMensaje}>
                             <Text style={styles.mensaje}>{Comment.comment}</Text>
@@ -24,7 +26,7 @@ const Comments = (props) => {
                         Enter your message here!"
                         placeholderTextColor="#9b9b9b"/>
                 </View>
-                
+            </ImageBackground>   
                
         </View>
         </ScrollView>
@@ -33,8 +35,12 @@ const Comments = (props) => {
 }
 
 const styles ={
+    username:{
+        fontWeight:"bold",
+    },
+
     textArea:{
-     
+        fontWeight:"bold",
         height: 40,
         width:"95%",
         paddingLeft:10,
@@ -56,30 +62,29 @@ const styles ={
     cajaPadreComentarios:{
         minHeight: 50,
         maxWidth:180,
-        backgroundColor:'yellow',
+        backgroundColor:'violet',
         marginTop:20,
+        marginLeft:10,
     },
 
     nombreUser:{
         paddingLeft:10,
-        paddingBottom:10
+        paddingBottom:10,
+        
     },
 
     mensaje:{
         justifyContent:'center',
-        paddingLeft:10
-    },
-    
-    
-
-    cajaComentarios:{
-        backgroundColor:'grey',
-        width:"100%",
-        paddingLeft:5,
-        justifyContent:'center'
+        paddingLeft:10,
         
     },
+    
+    
 
+   
+    fondo:{
+        width:'100%'
+    },
     contenedor:{
         alignItems:'center',
         justifyContent:'center'

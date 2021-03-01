@@ -1,7 +1,6 @@
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import React, {useRef, useState, useEffect} from 'react';
 import { SocialIcon } from 'react-native-elements'
-import axios from 'axios'
 import SelectPicker from 'react-native-form-select-picker';
 import {Button,TextInput,Image, ImageBackground, StyleSheet, Text, View, Alert } from 'react-native';
 import authActions from '../redux/actions/authActions'
@@ -34,7 +33,7 @@ const Register =(props) => {
     e.preventDefault()
     
    
-    if(newValue.username === '' || newValue.password === '') {
+    if(newValue.name === '' || newValue.lastname === '' || newValue.username === '' || newValue.password === ''|| newValue.mail === '' || newValue.urlpic === '' || newValue.country === '') {
         Alert.alert('completar')
 
         return false

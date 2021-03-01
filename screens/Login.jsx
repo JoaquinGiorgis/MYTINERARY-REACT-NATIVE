@@ -1,7 +1,6 @@
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import React, {useRef, useState, useEffect} from 'react';
 import { SocialIcon } from 'react-native-elements'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button,TextInput,Image, ImageBackground, StyleSheet, Text, View, ToastAndroid, Alert } from 'react-native';
 import authActions from '../redux/actions/authActions'
 import {connect} from 'react-redux'
@@ -232,19 +231,3 @@ export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 
 
-
-// async () => {
-//   try {
-//       await AsyncStorage.setItem("newValue", JSON.stringify(newValue))
-//       var userLog = await AsyncStorage.getItem("newValue")
-//       props.navigation.navigate("Home")
-//       setLogin(userLog)
-//   }
-//   catch (error) {
-//       console.log(error)
-//   }
-//   ToastAndroid.showWithGravity(
-//     "Welcome to MyTinerary! 🥳🌎",
-//     ToastAndroid.SHORT,
-//     ToastAndroid.CENTER
-//   );}

@@ -9,6 +9,7 @@ const logoAvion ={uri:'https://i.imgur.com/rDYrQsp.png'}
 const logoIsla = {uri:'https://i.imgur.com/wZG4JQh.png'}
 const logoMaleta = {uri:'https://i.imgur.com/i4HY6Rd.png'}
 const oops = {uri:'https://i.imgur.com/2SoUeIQ.png'}
+const favs = {uri:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Coraz%C3%B3n.svg/657px-Coraz%C3%B3n.svg.png'}
 
 const Itineraries =(props) => {
 
@@ -55,7 +56,11 @@ useEffect(()=> {
                     </View>
                 </View>
 
-                {(itineraries.length === 0) ?<View><Image source={oops} style={styles.imagenOops}/><Text>Go back all cities</Text></View> : itineraries.map(itinerary => (
+                {(itineraries.length === 0) ?<View><Image source={oops} style={styles.imagenOops}/><View style={styles.botonCities}>
+                  <Text style={styles.xd}  onPress={()=> props.navigation.navigate('Cities')}>GO ALL CITIES 🌎</Text>
+                </View><View style={styles.botonCities}>
+                                                <Text style={styles.xd}  onPress={()=> props.navigation.navigate('Home')}>GO HOME 🏡</Text>
+                                            </View></View> : itineraries.map(itinerary => (
                             
                             <View  style={styles.cajaMap}>           
                             
@@ -91,12 +96,17 @@ useEffect(()=> {
                                     </View>
                                     
                                    
-                                    
-                                    <View style={styles.cajaInfoUser}>
-                                        <Text style={styles.info}>Hours: {itinerary.hours}</Text>
-                                        <Text style={styles.info2}>Price: {Array(itinerary.price).fill('$')}</Text>
+                                    <View>
+                                        <View style={styles.cajaInfoUser}>
+                                            <Text style={styles.info}>Hours: {itinerary.hours}</Text>
+                                            <Text style={styles.info2}>Price: {Array(itinerary.price).fill('$')}</Text>
+                                            
+                                        </View>
                                         
                                     </View>
+
+                                    <Text style={styles.infoFav}> <ImageBackground source={favs} style={{width:21,height:18}}></ImageBackground> :  {itinerary.favs}</Text>
+
                                     <View style={styles.casa}>
                                         <Text style={styles.footerCard}>WE WILL WAIT FOR YOU!</Text>
                                     </View>
@@ -104,7 +114,16 @@ useEffect(()=> {
                                     <TouchableOpacity
                                         onPress={() => props.navigation.navigate("Comments",{itId: itinerary._id, comments: itinerary.comments})}>
                                         <View style={styles.pruebaaa} >   
-                                            <Text style={styles.nombreCiudad}>Any questions?</Text>                         
+
+                                            <View style={styles.botonChat}>
+                                                <Text style={styles.xd} >ANY QUESTIONS? GO CHAT! 📱</Text>
+                                            </View>
+                                            <View style={styles.botonCities}>
+                                                <Text style={styles.xd}  onPress={()=> props.navigation.navigate('Cities')}>GO ALL CITIES 🌎</Text>
+                                            </View>
+                                            <View style={styles.botonCities}>
+                                                <Text style={styles.xd}  onPress={()=> props.navigation.navigate('Home')}>GO HOME 🏡</Text>
+                                            </View>
                                         </View>
                                     </TouchableOpacity>
                                             <View style={styles.test}>
@@ -125,6 +144,37 @@ useEffect(()=> {
 }
 
 const styles ={
+    botonChat:{
+        backgroundColor:'violet',
+        alignItems:'center',
+        justifyContent:'center',
+        height:50,
+        marginBottom:30,
+        paddingLeft:10,
+        paddingRight:10,
+        marginTop:20,
+        width:'100%',
+        borderRadius:25,
+        borderWidth: 2,
+        borderColor:'white'
+    },
+
+    xd:{
+        fontWeight:'bold'
+    },
+
+    botonCities:{
+        backgroundColor:'violet',
+        alignItems:'center',
+        justifyContent:'center',
+        height:50,
+        marginBottom:30,
+        marginTop:10,
+        width:'100%',
+        borderRadius:25,
+        borderWidth: 2,
+        borderColor:'white'
+      },
 
     textCategoria:{
         fontWeight: 'bold',
@@ -137,10 +187,7 @@ const styles ={
         borderRadius:25,
     },
 
-    test:{
-        height:200,
-        width:200
-    },
+   
 
     imagenOops:{
         height:150,
@@ -178,16 +225,25 @@ const styles ={
        paddingTop:20,
        width:'100%',
        alignItems:'center',
-       paddingBottom:'25%',
+       
       
    },
-    cajaHashtags:{
-        flexDirection:'row',
-       
-        
-        paddingTop:10
-    },
+   infoFav:{
+    fontSize: RFValue(18, 580),
+    marginLeft:20,
+    marginTop:20,
+    fontWeight:'bold',
+    textTransform:'uppercase',
+    color:'white',
+    backgroundColor:'black',
+    paddingLeft:20,
+    paddingRight: 20, 
+    borderColor:'violet',
+    borderRadius:25,
+    borderWidth: 1,
+   },
 
+   
     info2:{
         fontSize: RFValue(18, 580),
         marginLeft:20,
