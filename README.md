@@ -28,5 +28,4 @@ funciona de la misma manera que un dispositivo móvil)
 
 # Expresiones de Gratitud 🎁
 Se agradece a Fernando Biaus por la mentoría y la dedicación. <br/>
-A todos los integrantes del equipo por la gran dedicacion con la que se desenvolvieron y por el resultado obtenido! <br/>
 También a Mindhub por la oportunidad de crecer como developers.
