@@ -26,6 +26,3 @@ funciona de la misma manera que un dispositivo móvil)
 - React Native - Framework para construir aplicaciones nativas.
 - Redux - Utilizado para trabajar con un estado global
 
-# Expresiones de Gratitud 🎁
-Se agradece a Fernando Biaus por la mentoría y la dedicación. <br/>
-También a Mindhub por la oportunidad de crecer como developers.
